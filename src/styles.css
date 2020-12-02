@@ -1,1 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+*{
+    padding: 0px;
+    margin:0px
+}
+
+#headerLogin{
+    background: url('./assets/img/header-cover.jpg');
+    background-size: cover;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}

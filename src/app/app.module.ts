@@ -8,6 +8,7 @@ import { LoginComponent } from './components/login/login.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ErrorComponent } from './components/error/error.component';
 import { appRountingProviders, routing } from './app.routing';
+import { WelcomeComponent } from './components/welcome/welcome.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { appRountingProviders, routing } from './app.routing';
     LoginComponent,
     HomeComponent,
     SettingsComponent,
-    ErrorComponent
+    ErrorComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,

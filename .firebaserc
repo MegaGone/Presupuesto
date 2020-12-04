@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "yourbudgeteasy": {
+      "hosting": {
+        "presupuesto": [
+          "yourbudgeteasy"
+        ]
+      }
+    }
+  }
+}

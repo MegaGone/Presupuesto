@@ -11,6 +11,12 @@
   margin-top: 230px;
 }
 
+body {
+  background: #ADA996;
+  background: -webkit-linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996);
+  background: linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996);
+}
+
 #headerLogin {
   background: #ADA996;
   background: -webkit-linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996);
@@ -51,15 +57,17 @@
 
 /* -------------------------------- */
 @keyframes move {
-    0%{
-        background: 0 50%;
-    }
-    50%{
-        background: 50% 100%;
-    }
-    100%{
-        background: 0 50%;
-    }
+  0% {
+    background: 0 50%;
+  }
+
+  50% {
+    background: 50% 100%;
+  }
+
+  100% {
+    background: 0 50%;
+  }
 }
 
 

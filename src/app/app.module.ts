@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from './../environments/environment';
+import { AuthService } from './auth/auth.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,8 +14,6 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { ErrorComponent } from './components/error/error.component';
 import { appRountingProviders, routing } from './app.routing';
 import { WelcomeComponent } from './components/welcome/welcome.component';
-import { RegisterComponent } from './components/register/register.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,8 +21,7 @@ import { RegisterComponent } from './components/register/register.component';
     HomeComponent,
     SettingsComponent,
     ErrorComponent,
-    WelcomeComponent,
-    RegisterComponent
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +32,7 @@ import { RegisterComponent } from './components/register/register.component';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule
   ],
-  providers: [ appRountingProviders ],
+  providers: [appRountingProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

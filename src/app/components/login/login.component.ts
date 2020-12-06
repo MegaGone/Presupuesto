@@ -1,24 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../auth/auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  providers: [AuthService]
 })
 export class LoginComponent implements OnInit {
 
-  form = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(8)])
-  })
-
-  constructor() { }
+  constructor(private afAuthSvc: AuthService) { }
 
   ngOnInit(): void {
   }
 
-  onLogin() {
-    console.log('form', this.form.value);
+  googleLogin(){
+    // Service
+    try{
+      this.afAuthSvc.googleLogin()
+    }
+    catch (err){console.log(err);
+    }
+    
   }
 
 }

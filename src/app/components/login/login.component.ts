@@ -23,4 +23,9 @@ export class LoginComponent implements OnInit {
     
   }
 
+  logOut(){
+    this.afAuthSvc.logOut();
+    console.log("LogOut")
+  }
+
 }

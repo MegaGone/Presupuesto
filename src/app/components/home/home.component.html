@@ -1,8 +1,18 @@
 <div class="col-sm-6 col-md-6 col-lg-5 mx-auto mt-5 bg-light">
-    <div class="form-group bg-danger">
-        <h4>{{user?.displayName}}</h4>
-        <fa-icon [icon]="faUserCog"></fa-icon>
-    </div>
+    <form class="">
+        <div class="form-row bg-primary">
+            <div class="col-lg-1 text-center">
+                <img src="{{user.photoURL}}" width="40">
+            </div>
 
+            <div class="col-lg-7 text-left mt-3">
+                <h4>{{user?.displayName}}</h4>
+            </div>
+            <div class="col-lg-4 text-right mt-3">
+                <fa-icon [icon]="faUserCog" [routerLink]="['/settings']"></fa-icon>
+            </div>
+        </div>
+
+    </form>
     <button class="btn btn-lg btn-dark" (click)="logOut()">LogOut</button>
 </div>

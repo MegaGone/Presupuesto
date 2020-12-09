@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
   logOut() {
     this.afAuthSvc.logOut();
     console.log('LogOut');
-    this.router.navigate(["/login"]);
+    this.router.navigate(["/"]);
   }
 
 }

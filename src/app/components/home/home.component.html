@@ -1,1 +1,8 @@
-<p>Hello {{user.email}}</p>
+<div class="col-sm-6 col-md-6 col-lg-5 mx-auto mt-5 bg-light">
+    <div class="form-group bg-danger">
+        <h4>{{user?.displayName}}</h4>
+        <fa-icon [icon]="faUserCog"></fa-icon>
+    </div>
+
+    <button class="btn btn-lg btn-dark" (click)="logOut()">LogOut</button>
+</div>

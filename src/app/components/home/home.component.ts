@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
+import { Router } from '@angular/router';
+import { faUserCog } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
@@ -8,10 +10,11 @@ import { AuthService } from '../../auth/auth.service';
   providers: [AuthService]
 })
 export class HomeComponent implements OnInit {
+  faUserCog = faUserCog;
 
   public user;
 
-  constructor(private afAuthSvc: AuthService) { }
+  constructor(private afAuthSvc: AuthService, private router: Router) { }
 
   async ngOnInit() {
     console.log('Home works');
@@ -19,8 +22,14 @@ export class HomeComponent implements OnInit {
 
     if (this.user) {
       console.log('User->', this.user);
-      
+
     }
+  }
+
+  logOut() {
+    this.afAuthSvc.logOut();
+    console.log('LogOut');
+    this.router.navigate(["/login"]);
   }
 
 }

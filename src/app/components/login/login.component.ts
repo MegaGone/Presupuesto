@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
+import { Router } from '@angular/router'
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -8,24 +9,29 @@ import { AuthService } from '../../auth/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private afAuthSvc: AuthService) { }
+  public usuario: any = {};
+
+  constructor(private afAuthSvc: AuthService, private router: Router) {
+
+    this.afAuthSvc.afAuth.authState.subscribe(user => {
+      if (!user) {
+        return;
+      }
+      this.router.navigate(['/home']);
+    })
+  }
 
   ngOnInit(): void {
   }
 
-  googleLogin(){
+  async googleLogin() {
     // Service
-    try{
-      this.afAuthSvc.googleLogin()
+    try {
+      await this.afAuthSvc.googleLogin();
     }
-    catch (err){console.log(err);
+    catch (err) {
+      console.log(err);
     }
-    
-  }
 
-  logOut(){
-    this.afAuthSvc.logOut();
-    console.log("LogOut")
   }
-
 }

@@ -1,1 +1,30 @@
-<p>settings works!</p>
+<div class="col-sm-6 col-md-6 col-lg-5 mx-auto mt-5">
+    <div class="container">
+        <div class="form-row p-2">
+            <div class="col-lg-1 text-center my-auto">
+                <fa-icon [icon]="faArrowLeft" [routerLink]="['/home']" class="text-right icon"></fa-icon>
+            </div>
+
+            <div class="col-lg-7 text-left mt-3 my-auto">
+                <h4>Settings</h4>
+            </div>
+
+            <div class="col-lg-4 text-right mt-3 my-auto">
+                <img class="rounded-circle" src="{{user.photoURL}}" width="40" height="40" alt="{{user?.displayName}}">
+            </div>
+        </div>
+
+        <div class="container rounded mt-2 bg-light">
+            <p>Set the day for the reset of your monthly budget and the total amount.</p>
+        </div>
+
+        <div class="container rounded mt-2 bg-light">
+            <form>
+                <input type="text" class="form-control">
+            </form>
+        </div>
+
+    </div>
+
+    <button class="btn btn-block btn-dark" (click)="logOut()">LogOut</button>
+</div>

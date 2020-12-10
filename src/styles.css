@@ -56,6 +56,19 @@ body {
 }
 
 /* -------------------------------- */
+.sub{
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.icon{
+  font-size: 20px;
+}
+
+#settings{
+  font-size: 20px;
+}
+/* -------------------------------- */
 @keyframes move {
   0% {
     background: 0 50%;

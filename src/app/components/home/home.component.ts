@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
-import { faUserCog } from '@fortawesome/free-solid-svg-icons';
-
+import { faUserCog, faBookmark, faHandHoldingUsd, faEdit} from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -11,6 +10,9 @@ import { faUserCog } from '@fortawesome/free-solid-svg-icons';
 })
 export class HomeComponent implements OnInit {
   faUserCog = faUserCog;
+  faBookMark = faBookmark;
+  faHandHoldingUsd = faHandHoldingUsd;
+  faEdit = faEdit;
 
   public user;
 

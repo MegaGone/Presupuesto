@@ -1,14 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
-import { faUserCog, faBookmark, faHandHoldingUsd, faEdit} from '@fortawesome/free-solid-svg-icons';
+import { faUserCog, faBookmark, faHandHoldingUsd, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   providers: [AuthService]
 })
+
 export class HomeComponent implements OnInit {
+
+  add = new FormGroup({
+    name: new FormControl('', Validators.required),
+    cost: new FormControl('', Validators.required)
+  })
+
   faUserCog = faUserCog;
   faBookMark = faBookmark;
   faHandHoldingUsd = faHandHoldingUsd;
@@ -21,11 +29,6 @@ export class HomeComponent implements OnInit {
   async ngOnInit() {
     console.log('Home works');
     this.user = await this.afAuthSvc.getCurrentUser();
-
-    if (this.user) {
-      console.log('User->', this.user);
-
-    }
   }
 
   logOut() {
@@ -34,4 +37,8 @@ export class HomeComponent implements OnInit {
     this.router.navigate(["/"]);
   }
 
+  addExpense(form) {
+    alert('Add');
+    form.reset();
+  }
 }

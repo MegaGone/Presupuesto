@@ -137,6 +137,12 @@ body {
   }
 }
 
+@media(max-width: 502px){
+  #name{
+    margin-left: 15px !important;
+  }
+}
+
 @media(max-width: 485px) {
   #log {
     width: 200px !important;
@@ -166,6 +172,10 @@ body {
 }
 
 @media(max-width:385px) {
+  #name{
+    margin-left: 20px !important;
+  }
+
   #log {
     width: 150px !important;
     height: 150px;
@@ -187,6 +197,12 @@ body {
 
   #upContent {
     margin-top: 180px;
+  }
+}
+
+@media(max-width: 355px){
+  #name{
+    font-size: 18px !important;
   }
 }
 

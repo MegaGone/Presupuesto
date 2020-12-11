@@ -1,16 +1,16 @@
-<div class="col-sm-6 col-md-6 col-lg-5 mx-auto mt-5">
+<div class="col-sm-10 col-md-8 col-lg-5 col-xl-5 mx-auto mt-5">
     <div class="container">
         <div class="form-row p-2">
-            <div class="col-lg-1 text-center my-auto">
+            <div class="col-1 col-sm-1 col-md-1 col-lg-1 text-center my-auto">
                 <fa-icon [icon]="faArrowLeft" [routerLink]="['/home']" class="text-right icon"></fa-icon>
             </div>
 
-            <div class="col-lg-7 text-left mt-3 my-auto">
+            <div class="col-7 col-sm-7 col-md-7 col-lg-7 text-left mt-3 my-auto">
                 <h4>Settings</h4>
             </div>
 
-            <div class="col-lg-4 text-right mt-3 my-auto">
-                <img class="rounded-circle" src="{{user.photoURL}}" width="40" height="40" alt="{{user?.displayName}}">
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4 text-right mt-3 my-auto">
+                <img class="rounded-circle" src="{{user?.photoURL}}" width="40" height="40" alt="{{user?.displayName}}">
             </div>
         </div>
 
@@ -18,13 +18,103 @@
             <p>Set the day for the reset of your monthly budget and the total amount.</p>
         </div>
 
-        <div class="container rounded mt-2 bg-light">
-            <form>
-                <input type="text" class="form-control">
+        <!-- Salary and date -->
+        <div class="container rounded p-2 bg-light">
+            <form [formGroup]="form" class="form-horizontal" (ngSubmit)="saveChanges()">
+
+                <div class="form-row">
+                    <div class="col-lg-12">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text rounded">Salary</span>
+                            </div>
+                            <input autocomplete="off" type="number" class="form-control" formControlName="salary"
+                                [ngClass]="{'is-invalid':form.get('salary').touched && form.get('salary').invalid}">
+                            <div class="invalid-feedback">
+                                Salary is required!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row mt-2 mb-2">
+                    <div class="col-lg-12">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text rounded">Cutoff Date</span>
+                            </div>
+                            <input autocomplete="off" type="number" class="form-control" formControlName="date"
+                                [ngClass]="{'is-invalid':form.get('date').touched && form.get('date').invalid}">
+                            <div class="invalid-feedback">
+                                Date is required!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-dark btn-block">Save</button>
             </form>
         </div>
 
-    </div>
+        <!-- Modal -->
+        <button type="button" class="btn btn-primary btn-block mt-2" data-bs-toggle="modal"
+            data-bs-target="#exampleModal">
+            + Add Expense
+        </button>
 
-    <button class="btn btn-block btn-dark" (click)="logOut()">LogOut</button>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Fixed Expense</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form #fijo="ngForm" [formGroup]="fixed">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text rounded">Name</span>
+                                </div>
+                                <input autocomplete="off" class="form-control" type="text" formControlName="name"
+                                    [ngClass]="{'is-invalid':fixed.get('name').invalid && fixed.get('name').touched}">
+                                <div class="invalid-feedback">
+                                    Expense name is required!
+                                </div>
+                            </div>
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text rounded">Cost</span>
+                                </div>
+                                <input autocomplete="off" class="form-control" type="number" formControlName="cost"
+                                    [ngClass]="{'is-invalid':fixed.get('cost').invalid && fixed.get('cost').touched}">
+                                <div class="invalid-feedback">
+                                    Cost is required!
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                            (click)="addExpense(fijo)">Add</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fixed costs -->
+        <div class="container rounded bg-white mt-2">
+            <div class="text-center p-1 border-bottom border-dark">
+                <h4>FIXED EXPENSE</h4>
+            </div>
+            <div class="mt-2">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Cras justo odio</li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="btn btn-block btn-danger mt-3" (click)="logOut()">LogOut</button>
+    </div>
 </div>

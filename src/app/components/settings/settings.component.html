@@ -2,7 +2,7 @@
     <div class="container">
         <div class="form-row p-2">
             <div class="col-1 col-sm-1 col-md-1 col-lg-1 text-center my-auto">
-                <fa-icon [icon]="faArrowLeft" [routerLink]="['/home']" class="text-right icon"></fa-icon>
+                <fa-icon id="back" [icon]="faArrowLeft" [routerLink]="['/home']" class="text-right icon"></fa-icon>
             </div>
 
             <div class="col-7 col-sm-7 col-md-7 col-lg-7 text-left mt-3 my-auto">
@@ -20,7 +20,7 @@
 
         <!-- Salary and date -->
         <div class="container rounded p-2 bg-light">
-            <form [formGroup]="form" class="form-horizontal" (ngSubmit)="saveChanges()">
+            <form #formu="ngForm" [formGroup]="form" class="form-horizontal" (ngSubmit)="saveChanges(formu)">
 
                 <div class="form-row">
                     <div class="col-lg-12">
@@ -28,7 +28,8 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text rounded">Salary</span>
                             </div>
-                            <input autocomplete="off" type="number" class="form-control" formControlName="salary"
+                            <input placeholder="{{userSalary}}" autocomplete="off" type="number" onkeypress="return event.charCode >= 48" min="1"
+                                class="form-control" formControlName="salary"
                                 [ngClass]="{'is-invalid':form.get('salary').touched && form.get('salary').invalid}">
                             <div class="invalid-feedback">
                                 Salary is required!
@@ -43,7 +44,8 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text rounded">Cutoff Date</span>
                             </div>
-                            <input autocomplete="off" type="number" class="form-control" formControlName="date"
+                            <input placeholder="{{userDate}}" autocomplete="off" type="number" class="form-control" formControlName="date"
+                                onkeypress="if(this.value.length == 2) return false; return event.charCode >= 48" min="1"
                                 [ngClass]="{'is-invalid':form.get('date').touched && form.get('date').invalid}">
                             <div class="invalid-feedback">
                                 Date is required!
@@ -78,14 +80,15 @@
                                 <input autocomplete="off" class="form-control" type="text" formControlName="name"
                                     [ngClass]="{'is-invalid':fixed.get('name').invalid && fixed.get('name').touched}">
                                 <div class="invalid-feedback">
-                                    Expense name is required!
+                                    Name is required!
                                 </div>
                             </div>
                             <div class="input-group mt-2">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text rounded">Cost</span>
                                 </div>
-                                <input autocomplete="off" class="form-control" type="number" formControlName="cost"
+                                <input name="costo" autocomplete="off" class="form-control" type="number"
+                                    onkeypress="return event.charCode >= 48" min="1" formControlName="cost"
                                     [ngClass]="{'is-invalid':fixed.get('cost').invalid && fixed.get('cost').touched}">
                                 <div class="invalid-feedback">
                                     Cost is required!

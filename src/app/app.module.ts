@@ -6,6 +6,9 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from './../environments/environment';
 import { AuthService } from './auth/auth.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { DataService } from './services/data.service';
+import { HttpClientModule } from '@angular/common/http';
+
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -30,9 +33,10 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    HttpClientModule
   ],
-  providers: [appRountingProviders, AuthService, AngularFireAuth],
+  providers: [appRountingProviders, AuthService, AngularFireAuth, DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

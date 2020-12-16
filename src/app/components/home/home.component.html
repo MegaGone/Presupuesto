@@ -26,13 +26,13 @@
                     </div>
 
                     <div class="modal-body">
-                        <form #form="ngForm" [formGroup]="add">
+                        <form #f="ngForm" [formGroup]="add">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text rounded">Name</span>
                                 </div>
-                                <input autocomplete="off" class="form-control" type="text" formControlName="name"
-                                    [ngClass]="{'is-invalid':add.get('name').invalid && add.get('name').touched}">
+                                <input autocomplete="off" class="form-control" type="text" formControlName="name" name='name'
+                                    [ngClass]="{'is-invalid':add.get('name').invalid && add.get('name').touched}" [(ngModel)]="item.name">
                                 <div class="invalid-feedback">
                                     Expense name is required!
                                 </div>
@@ -42,7 +42,8 @@
                                     <span class="input-group-text rounded">Cost</span>
                                 </div>
                                 <input autocomplete="off" class="form-control" type="number" formControlName="cost"
-                                    [ngClass]="{'is-invalid':add.get('cost').invalid && add.get('cost').touched}">
+                                    onkeypress="return event.charCode >= 48" min="1" name="cost"
+                                    [ngClass]="{'is-invalid':add.get('cost').invalid && add.get('cost').touched}" [(ngModel)]="item.cost">
                                 <div class="invalid-feedback">
                                     Cost is required!
                                 </div>
@@ -52,7 +53,7 @@
 
                     <div class="modal-footer text-center">
                         <button type="button" class="btn btn-success" data-bs-dismiss="modal"
-                            (click)="addExpense(form)">Add</button>
+                            (click)="addExpense(f)">Add</button>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
                     </div>
                 </div>
@@ -68,13 +69,13 @@
                     <fa-icon [icon]="faEdit" class="text-right icon"></fa-icon>
                     <span class="sub"> EXPENSES</span>
                 </p>
-                <h5 class="text-center"> </h5>
+                <h5 class="text-center">{{items}}</h5>
             </div>
 
             <div class="col-4 col-sm-4 col-md-4 col-lg-4">
                 <p class="text-center">
                     <fa-icon [icon]="faHandHoldingUsd" class="text-right icon"></fa-icon>
-                    <span class="sub"> AVAILABLE</span>
+                    <span class="sub"> AVAILABLE  {{avaliable}}</span>
                 </p>
                 <h5 class="text-center">Q </h5>
             </div>
@@ -84,7 +85,7 @@
                     <fa-icon [icon]="faBookMark" class="text-right icon"></fa-icon>
                     <span class="sub"> TOTAL BUDGET</span>
                 </p>
-                <h5 class="text-center">Q </h5>
+                <h5 class="text-center">Q {{salary}}</h5>
             </div>
         </div>
 

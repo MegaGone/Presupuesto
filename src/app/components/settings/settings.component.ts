@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
+import { DataService } from '../../services/data.service';
 import { Router } from '@angular/router';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css'],
-  providers: [AuthService]
+  providers: [AuthService, DataService]
 })
 export class SettingsComponent implements OnInit {
+
 
   form = new FormGroup({
     salary: new FormControl('', Validators.required),
@@ -23,12 +25,20 @@ export class SettingsComponent implements OnInit {
 
   faArrowLeft = faArrowLeft;
 
-  constructor(private afAuthSvc: AuthService, public router: Router) { }
+  constructor(private afAuthSvc: AuthService, public router: Router, private dataService: DataService) {
+  }
 
   public user;
+  public userData;
+  public userDate;
+  public userSalary;
+  public date: any;
+  public salary: any;
 
   async ngOnInit() {
     this.user = await this.afAuthSvc.getCurrentUser();
+    this.userDate = localStorage.getItem("date");
+    this.userSalary = localStorage.getItem("salary");
   }
 
   logOut() {
@@ -37,11 +47,18 @@ export class SettingsComponent implements OnInit {
     this.router.navigate(["/"]);
   }
 
-  saveChanges(){
+  saveChanges(form: NgForm) {
+    this.dataService.setUserData(form, this.userData, this.date, this.salary)
     alert('Save');
   }
 
-  addExpense(form){
+  addExpense(form) {
+
+    if(form.invalid){
+      console.log("Not add");
+      return;
+    }
+
     alert('Add');
     form.reset();
   }

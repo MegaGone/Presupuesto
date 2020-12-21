@@ -4,6 +4,7 @@ import { DataService } from '../../services/data.service';
 import { Router } from '@angular/router';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -29,16 +30,18 @@ export class SettingsComponent implements OnInit {
   }
 
   public user;
-  public userData;
+  public data: {} = {};
   public userDate;
-  public userSalary;
+  public userData;
+  public userSalary: number;
   public date: any;
   public salary: any;
+  public s: any;
+  public d: any;
 
   async ngOnInit() {
     this.user = await this.afAuthSvc.getCurrentUser();
-    this.userDate = localStorage.getItem("date");
-    this.userSalary = localStorage.getItem("salary");
+    this.getUserData();
   }
 
   logOut() {
@@ -47,19 +50,35 @@ export class SettingsComponent implements OnInit {
     this.router.navigate(["/"]);
   }
 
+
   saveChanges(form: NgForm) {
+
+    if (form.invalid) {
+      console.log('Not add');
+      return;
+    }
+
     this.dataService.setUserData(form, this.userData, this.date, this.salary)
     alert('Save');
   }
 
   addExpense(form) {
-
-    if(form.invalid){
+    if (form.invalid) {
       console.log("Not add");
       return;
     }
 
-    alert('Add');
+    console.log(form);
     form.reset();
+  }
+
+  getUserData() {
+    const data = this.dataService.getUserData()
+    this.form.setValue({
+      salary: data.salary,
+      date: data.date
+    })
+    this.s = data.salary;
+    this.d = data.date;
   }
 }

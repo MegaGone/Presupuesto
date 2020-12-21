@@ -25,18 +25,19 @@ export class HomeComponent implements OnInit {
   faEdit = faEdit;
 
   public user;
-  public salary: number | string = 0;
-  public avaliable: number | string;
+  public salary: number = 0;
+  public avaliable: number;
   public item = new ItemModel();
   public items: number = 0;
 
   constructor(private afAuthSvc: AuthService, private router: Router, private itemSvc: ItemService) {
-    this.salary = localStorage.getItem("salary");
+    this.salary = parseInt(localStorage.getItem("salary"));
+    this.avaliable = this.salary;
   }
 
   async ngOnInit() {
     this.user = await this.afAuthSvc.getCurrentUser();
-    this.salary = localStorage.getItem("salary");
+    this.salary = parseInt(localStorage.getItem("salary"));
   }
 
   logOut() {
@@ -45,12 +46,13 @@ export class HomeComponent implements OnInit {
     this.router.navigate(["/"]);
   }
 
-  addExpense(form){
-    if(form.invalid){
+  addExpense(form) {
+    if (form.invalid) {
       return;
     }
 
-    this.items++;
+    this.itemSvc.addItem(this.item).subscribe(res => console.log(res));
+    console.log(this.item);
     alert('Add');
     form.reset();
   }

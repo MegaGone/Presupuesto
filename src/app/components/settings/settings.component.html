@@ -28,12 +28,13 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text rounded">Salary</span>
                             </div>
-                            <input placeholder="{{userSalary}}" autocomplete="off" type="number" onkeypress="return event.charCode >= 48" min="1"
-                                class="form-control" formControlName="salary"
+                            <input value="{{s}}" autocomplete="off" type="number"
+                                onkeypress="return event.charCode >= 48" min="1" class="form-control"
+                                formControlName="salary"
                                 [ngClass]="{'is-invalid':form.get('salary').touched && form.get('salary').invalid}">
-                            <div class="invalid-feedback">
-                                Salary is required!
-                            </div>
+                                <div class="invalid-feedback">
+                                    Salary is required!
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -44,9 +45,10 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text rounded">Cutoff Date</span>
                             </div>
-                            <input placeholder="{{userDate}}" autocomplete="off" type="number" class="form-control" formControlName="date"
-                                onkeypress="if(this.value.length == 2) return false; return event.charCode >= 48" min="1"
-                                [ngClass]="{'is-invalid':form.get('date').touched && form.get('date').invalid}">
+                            <input value="{{d}}" autocomplete="off" type="number" class="form-control"
+                                formControlName="date"
+                                onkeypress="if(this.value.length == 2) return false; return event.charCode >= 48"
+                                min="1" [ngClass]="{'is-invalid':form.get('date').touched && form.get('date').invalid}">
                             <div class="invalid-feedback">
                                 Date is required!
                             </div>

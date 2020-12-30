@@ -5,9 +5,13 @@ import { Injectable } from '@angular/core';
 })
 export class DataService {
 
-  constructor() { }
+  constructor() { 
+  }
 
   setUserData(form, user, date, salary) {
+    date = 0;
+    salary = 0;
+
     date = form.value.date;
     salary = form.value.salary;
 

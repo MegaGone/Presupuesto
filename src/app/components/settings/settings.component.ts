@@ -46,7 +46,6 @@ export class SettingsComponent implements OnInit {
 
   logOut() {
     this.afAuthSvc.logOut();
-    console.log('LogOut');
     this.router.navigate(["/"]);
   }
 
@@ -54,21 +53,46 @@ export class SettingsComponent implements OnInit {
   saveChanges(form: NgForm) {
 
     if (form.invalid) {
-      console.log('Not add');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Error to save changes',
+        showConfirmButton: false,
+        timer: 2000
+      })
       return;
     }
 
     this.dataService.setUserData(form, this.userData, this.date, this.salary)
-    alert('Save');
+    Swal.fire({
+      icon: 'success',
+      title: 'Update',
+      text: 'Your changes was update :)',
+      timer: 2000,
+      showConfirmButton: false
+    });
   }
 
   addExpense(form) {
     if (form.invalid) {
-      console.log("Not add");
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Invalid item, try again please.',
+        showConfirmButton: false,
+        timer: 1500
+      })
       return;
     }
 
-    console.log(form);
+    Swal.fire({
+      icon: 'success',
+      title: 'Success',
+      text: 'Your item was saved.',
+      showConfirmButton: false,
+      timer: 1500
+    });
+
     form.reset();
   }
 

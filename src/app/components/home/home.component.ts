@@ -99,6 +99,24 @@ export class HomeComponent implements OnInit {
     form.reset();
   }
 
+  deleteItem(id: string, i: number) {
+    Swal.fire({
+      icon: 'question',
+      title: 'Warning',
+      text: `Are you sure to delete this item?`,
+      showCancelButton: true,
+      showConfirmButton: true,
+    }).then(res => {
+
+      if (res.value) {
+        this.elements.splice(i, 1);
+        this.itemSvc.deleteItem(this.userID, id).subscribe(res => {
+          this.getUserItems();
+        });
+      }
+    })
+  };
+
   getUserItems() {
     this.itemSvc.getItem(this.userID).subscribe(res => {
 
@@ -114,22 +132,4 @@ export class HomeComponent implements OnInit {
 
     });
   };
-
-
-  deleteItem(id: string, i: number) {
-    Swal.fire({
-      icon: 'question',
-      title: 'Warning',
-      text: `Are you sure to delete this item?`,
-      showCancelButton: true,
-      showConfirmButton: true,
-    }).then(res => {
-
-      if (res.value) {
-        this.elements.splice(i, 1);
-        this.itemSvc.deleteItem(this.userID, id).subscribe();
-      }
-    })
-  };
-
 }

@@ -3,7 +3,7 @@ import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { ItemModel2 } from '../models/item.model';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 @Injectable({
     providedIn: 'root'
 })
@@ -22,7 +22,23 @@ export class ItemService {
         
     }
 
+    // Fixed Items
+    addItemFixed(item: ItemModel2){
+        return this.http.post(`${this.url}/fixed/${this.userID}.json`, item);
+    }
 
+    getFixedItems(id: string){
+        return this.http.get(`${this.url}/fixed/${ id }.json`)
+            .pipe(
+                map( this.mapItems)
+            );
+    }
+
+    deleteItemFixed(id: string, itemId: string){
+        return this.http.delete(`${this.url}/fixed/${ id }/${ itemId }.json`);
+    }
+
+    // Normal items
     addItem(item: ItemModel2) {
         return this.http.post(`${this.url}/items/${this.userID}.json`, item);
     }
@@ -36,7 +52,8 @@ export class ItemService {
         
         return this.http.get(`${this.url}/items/${ id }.json`)
             .pipe( 
-                map( this.mapItems )
+                map( this.mapItems ),
+                delay(100)
             );
     }
 

@@ -16,8 +16,8 @@
 
 
         <!-- Modal -->
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="staticBackdropLabel"
+            aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -92,16 +92,18 @@
             </div>
         </div>
 
+        <!-- Add Expense -->
+
         <div class="form-row mt-2">
             <div class="col-lg-12">
                 <button type="button" class="btn btn-dark btn-block" data-bs-toggle="modal"
-                    data-bs-target="#staticBackdrop">
+                    data-bs-target="#exampleModal">
                     + Add Expense
                 </button>
             </div>
         </div>
 
-        <div class="container rounded bg-white mt-2">
+        <div *ngIf="!loading && elements.length > 0" class="container rounded bg-white mt-2">
             <div class="text-center p-1 border-bottom border-dark">
                 <h4>RECENT EXPENSES</h4>
             </div>
@@ -110,14 +112,15 @@
 
                     <li *ngFor="let item of elements; let i = index" class="list-group-item">
                         <div class="form-row text-center">
-                                <div class="col-7 col-md-7 col-lg-7 text-left text-capitalize">
-                                    {{ item.name }}
-                                </div>
+                            <div class="col-7 col-md-7 col-lg-7 text-left text-capitalize">
+                                {{ item.name }}
+                            </div>
                             <div class="col-3 col-md-3 col-lg-3 fw-bold">
                                 Q {{ item.cost }}
                             </div>
                             <div class="col-2 col-md-2 col-lg-2 text-right">
-                                <button data-id="{{ item.name }}" class="btn btn-danger" (click)="deleteItem(item.id, i)">
+                                <button data-id="{{ item.name }}" class="btn btn-danger"
+                                    (click)="deleteItem(item.id, i)">
                                     <fa-icon [icon]="faTrash"></fa-icon>
                                 </button>
                             </div>
@@ -127,5 +130,26 @@
                 </ul>
             </div>
         </div>
+
+        <!-- States -->
+
+        <!-- Loading -->
+        <div *ngIf="loading" class="alert alert-info text-center mt-3" role="alert">
+            <h4 class="alert-heading">Loading...</h4>
+            <i class="fa fa-spinner fa-spin fa-2x"></i>
+            <p class="mb-0">
+                Please wait...
+            </p>
+        </div>
+
+        <!-- No Items -->
+        <div *ngIf="!loading && elements.length === 0" class="alert alert-warning text-center mt-3" role="alert">
+            <h4 class="alert-heading">You dont have items</h4>
+            <i class="fa fa-exclamation fa-2x"></i>
+            <p class="mb-0">
+                Add items
+            </p>
+        </div>
+
     </div>
 </div>

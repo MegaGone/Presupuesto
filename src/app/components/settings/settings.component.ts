@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { DataService } from '../../services/data.service';
 import { Router } from '@angular/router';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { ItemService } from 'src/app/services/item.service';
+import { ItemModel2 } from 'src/app/models/item.model';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -25,9 +27,14 @@ export class SettingsComponent implements OnInit {
   })
 
   faArrowLeft = faArrowLeft;
+  faTrash = faTrash;
 
-  constructor(private afAuthSvc: AuthService, public router: Router, private dataService: DataService) {
-  }
+  public item: ItemModel2 = {
+    id: '',
+    name: '',
+    cost: 0,
+    date: new Date()
+  };
 
   public user;
   public data: {} = {};
@@ -38,10 +45,21 @@ export class SettingsComponent implements OnInit {
   public salary: any;
   public s: any;
   public d: any;
+  public userID;
+  public items: ItemModel2[] = [];;
+
+  constructor(
+    private afAuthSvc: AuthService, public router: Router, private dataService: DataService, private itemSvc: ItemService) {
+
+    this.afAuthSvc.afAuth.authState.subscribe(user => {
+      this.userID = user.uid;
+    })
+  }
 
   async ngOnInit() {
     this.user = await this.afAuthSvc.getCurrentUser();
     this.getUserData();
+    this.getItems();
   }
 
   logOut() {
@@ -51,7 +69,6 @@ export class SettingsComponent implements OnInit {
 
 
   saveChanges(form: NgForm) {
-
     if (form.invalid) {
       Swal.fire({
         icon: 'error',
@@ -74,6 +91,9 @@ export class SettingsComponent implements OnInit {
   }
 
   addExpense(form) {
+
+    let salario = parseInt(localStorage.getItem("salary"));
+
     if (form.invalid) {
       Swal.fire({
         icon: 'error',
@@ -85,13 +105,29 @@ export class SettingsComponent implements OnInit {
       return;
     }
 
-    Swal.fire({
-      icon: 'success',
-      title: 'Success',
-      text: 'Your item was saved.',
-      showConfirmButton: false,
-      timer: 1500
-    });
+    if (this.item.cost <= salario) {
+
+      this.itemSvc.addItemFixed(this.item).subscribe(res => {
+        this.getItems();
+      })
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Your item was saved.',
+        showConfirmButton: false,
+        timer: 1500
+      });
+
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Invalid item, try again please.',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
 
     form.reset();
   }
@@ -104,5 +140,32 @@ export class SettingsComponent implements OnInit {
     })
     this.s = data.salary;
     this.d = data.date;
+  }
+
+  deleteItem(id: string, i: number) {
+
+    Swal.fire({
+      icon: 'question',
+      title: 'Warning',
+      text: `Are you sure to delete this item?`,
+      showCancelButton: true,
+      showConfirmButton: true,
+    }).then(res => {
+
+      if (res.value) {
+        this.items.splice(i, 1);
+        this.itemSvc.deleteItemFixed(this.userID, id).subscribe(res => {
+          this.getItems();
+        })
+      }
+
+    })
+  }
+
+  getItems() {
+    this.itemSvc.getFixedItems(this.userID).subscribe(res => {
+      //console.log(res);
+      this.items = res;
+    })
   }
 }

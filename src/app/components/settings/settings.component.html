@@ -32,9 +32,9 @@
                                 onkeypress="return event.charCode >= 48" min="1" class="form-control"
                                 formControlName="salary"
                                 [ngClass]="{'is-invalid':form.get('salary').touched && form.get('salary').invalid}">
-                                <div class="invalid-feedback">
-                                    Salary is required!
-                                </div>
+                            <div class="invalid-feedback">
+                                Salary is required!
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -80,7 +80,8 @@
                                     <span class="input-group-text rounded">Name</span>
                                 </div>
                                 <input autocomplete="off" class="form-control" type="text" formControlName="name"
-                                    [ngClass]="{'is-invalid':fixed.get('name').invalid && fixed.get('name').touched}">
+                                    [ngClass]="{'is-invalid':fixed.get('name').invalid && fixed.get('name').touched}"
+                                    [(ngModel)]="item.name">
                                 <div class="invalid-feedback">
                                     Name is required!
                                 </div>
@@ -91,7 +92,8 @@
                                 </div>
                                 <input name="costo" autocomplete="off" class="form-control" type="number"
                                     onkeypress="return event.charCode >= 48" min="1" formControlName="cost"
-                                    [ngClass]="{'is-invalid':fixed.get('cost').invalid && fixed.get('cost').touched}">
+                                    [ngClass]="{'is-invalid':fixed.get('cost').invalid && fixed.get('cost').touched}"
+                                    [(ngModel)]="item.cost">
                                 <div class="invalid-feedback">
                                     Cost is required!
                                 </div>
@@ -108,14 +110,28 @@
             </div>
         </div>
 
-        <!-- Fixed costs -->
+        <!-- Fixed Items -->
         <div class="container rounded bg-white mt-2">
             <div class="text-center p-1 border-bottom border-dark">
                 <h4>FIXED EXPENSE</h4>
             </div>
             <div class="mt-2">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Cras justo odio</li>
+                    <li *ngFor="let item of items; let i = index" class="list-group-item">
+                        <div class="form-row text-center">
+                            <div class="col-7 col-md-7 col-lg-7 text-left text-capitalize">
+                                {{ item.name }}
+                            </div>
+                            <div class="col-3 col-md-3 col-lg-3 fw-bold">
+                                Q {{ item.cost }}
+                            </div>
+                            <div class="col-2 col-md-2 col-lg-2 text-right">
+                                <button data-id="{{ item.id }}" class="btn btn-danger" (click)="deleteItem(item.id, i)">
+                                    <fa-icon [icon]="faTrash"></fa-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>

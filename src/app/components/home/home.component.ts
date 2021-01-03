@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { ItemService } from '../../services/item.service';
 import { Router } from '@angular/router';
-import { faUserCog, faBookmark, faHandHoldingUsd, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faUserCog, faBookmark, faHandHoldingUsd, faEdit, faTrash, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ItemModel2 } from '../../models/item.model';
 import Swal from 'sweetalert2';
@@ -25,7 +25,9 @@ export class HomeComponent implements OnInit {
   faHandHoldingUsd = faHandHoldingUsd;
   faEdit = faEdit;
   faTrash = faTrash;
+  faSpinner = faSpinner;
 
+  public loading: boolean = false;
   public user;
   public salary: number = 0;
   public avaliable: number;
@@ -52,6 +54,7 @@ export class HomeComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.loading = true;
     this.user = await this.afAuthSvc.getCurrentUser();
     this.salary = parseInt(localStorage.getItem("salary"));
     this.getUserItems();
@@ -129,7 +132,7 @@ export class HomeComponent implements OnInit {
 
       this.avaliable = this.salary - total;
       this.items = this.elements.length;
-
+      this.loading = false;
     });
   };
 }

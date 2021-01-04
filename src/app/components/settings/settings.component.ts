@@ -30,7 +30,7 @@ export class SettingsComponent implements OnInit {
   faTrash = faTrash;
 
   public item: ItemModel2 = {
-    id: '',
+    id: '0',
     name: '',
     cost: 0,
     date: new Date()
@@ -46,7 +46,8 @@ export class SettingsComponent implements OnInit {
   public s: any;
   public d: any;
   public userID;
-  public items: ItemModel2[] = [];;
+  public items: ItemModel2[] = [];
+  public loading: boolean = false;
 
   constructor(
     private afAuthSvc: AuthService, public router: Router, private dataService: DataService, private itemSvc: ItemService) {
@@ -57,6 +58,7 @@ export class SettingsComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.loading = true;
     this.user = await this.afAuthSvc.getCurrentUser();
     this.getUserData();
     this.getItems();
@@ -166,6 +168,7 @@ export class SettingsComponent implements OnInit {
     this.itemSvc.getFixedItems(this.userID).subscribe(res => {
       //console.log(res);
       this.items = res;
+      this.loading = false
     })
   }
 }

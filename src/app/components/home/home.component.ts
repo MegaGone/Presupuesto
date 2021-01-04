@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { ItemService } from '../../services/item.service';
 import { Router } from '@angular/router';
-import { faUserCog, faBookmark, faHandHoldingUsd, faEdit, faTrash, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faUserCog, faBookmark, faHandHoldingUsd, faEdit, faTrash, faSpinner, faTintSlash } from '@fortawesome/free-solid-svg-icons';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ItemModel2 } from '../../models/item.model';
 import Swal from 'sweetalert2';
@@ -40,6 +40,9 @@ export class HomeComponent implements OnInit {
   public items: number;
   public userID: string;
   public itemID;
+  public itemsfixeds: ItemModel2[] = [];
+  public normal;
+  public fixed;
 
   public elements: ItemModel2[] = [];
 
@@ -58,6 +61,7 @@ export class HomeComponent implements OnInit {
     this.user = await this.afAuthSvc.getCurrentUser();
     this.salary = parseInt(localStorage.getItem("salary"));
     this.getUserItems();
+    this.getItemsFixed();
   }
 
   logOut() {
@@ -123,16 +127,23 @@ export class HomeComponent implements OnInit {
   getUserItems() {
     this.itemSvc.getItem(this.userID).subscribe(res => {
 
-      let total = 0;
+      let normal = 0;
       this.elements = res;
       this.elements.forEach((item) => {
 
-        total += item.cost;
+        normal += item.cost;
       });
 
-      this.avaliable = this.salary - total;
-      this.items = this.elements.length;
+      this.avaliable = this.salary - normal;
+      this.normal = this.elements.length;
       this.loading = false;
     });
   };
+
+  // Item Fixed
+  getItemsFixed() {
+    this.itemSvc.getFixedItems(this.userID).subscribe(res => {
+      this.itemsfixeds = res;
+    });
+  }
 }

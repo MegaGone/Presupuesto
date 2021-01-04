@@ -30,7 +30,8 @@ export class ItemService {
     getFixedItems(id: string){
         return this.http.get(`${this.url}/fixed/${ id }.json`)
             .pipe(
-                map( this.mapItems)
+                map( this.mapItems),
+                delay(100)
             );
     }
 

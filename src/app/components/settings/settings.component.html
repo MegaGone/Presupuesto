@@ -111,7 +111,7 @@
         </div>
 
         <!-- Fixed Items -->
-        <div class="container rounded bg-white mt-2">
+        <div *ngIf="!loading && items.length > 0" class="container rounded bg-white mt-2">
             <div class="text-center p-1 border-bottom border-dark">
                 <h4>FIXED EXPENSE</h4>
             </div>
@@ -135,6 +135,27 @@
                 </ul>
             </div>
         </div>
+
+        <!-- States -->
+
+        <!-- Loading -->
+        <div *ngIf="loading" class="alert alert-info text-center mt-3" role="alert">
+            <h4 class="alert-heading">Loading...</h4>
+            <i class="fa fa-spinner fa-spin fa-2x"></i>
+            <p class="mb-0">
+                Please wait...
+            </p>
+        </div>
+
+        <!-- No Items -->
+        <div *ngIf="!loading && items.length === 0" class="alert alert-warning text-center mt-3" role="alert">
+            <h4 class="alert-heading">You dont have fixed items</h4>
+            <i class="fa fa-exclamation fa-2x"></i>
+            <p class="mb-0">
+                Add items
+            </p>
+        </div>
+
 
         <button class="btn btn-block btn-danger mt-3" (click)="logOut()">LogOut</button>
     </div>

@@ -72,7 +72,7 @@
                     <fa-icon [icon]="faEdit" class="text-right icon"></fa-icon>
                     <span class="sub"> EXPENSES</span>
                 </p>
-                <h5 class="text-center">{{items}}</h5>
+                <h5 class="text-center">{{ normal }}</h5>
             </div>
 
             <div class="col-4 col-sm-4 col-md-4 col-lg-4">
@@ -110,13 +110,26 @@
             <div class="mt-2">
                 <ul class="list-group list-group-flush">
 
+                    <!-- Fixed Items -->
+                    <li *ngFor="let fixed of itemsfixeds;" class="list-group-item">
+                        <div class="form-row text-center">
+                            <div class="col-9 col-md-7 col-lg-7 text-left text-capitalize">
+                                {{ fixed.name }}
+                            </div>
+                            <div class="col-3 col-md-3 col-lg-3 fw-bold">
+                                Q {{ fixed.cost | number }}
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Normal Items -->
                     <li *ngFor="let item of elements; let i = index" class="list-group-item">
                         <div class="form-row text-center">
                             <div class="col-7 col-md-7 col-lg-7 text-left text-capitalize">
                                 {{ item.name }}
                             </div>
                             <div class="col-3 col-md-3 col-lg-3 fw-bold">
-                                Q {{ item.cost }}
+                                Q {{ item.cost | number}}
                             </div>
                             <div class="col-2 col-md-2 col-lg-2 text-right">
                                 <button data-id="{{ item.name }}" class="btn btn-danger"

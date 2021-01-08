@@ -72,7 +72,7 @@
                     <fa-icon [icon]="faEdit" class="text-right icon"></fa-icon>
                     <span class="sub"> EXPENSES</span>
                 </p>
-                <h5 class="text-center">{{ normal }}</h5>
+                <h5 class="text-center">{{ normal + fixed }}</h5>
             </div>
 
             <div class="col-4 col-sm-4 col-md-4 col-lg-4">
@@ -80,7 +80,7 @@
                     <fa-icon [icon]="faHandHoldingUsd" class="text-right icon"></fa-icon>
                     <span class="sub"> AVAILABLE</span>
                 </p>
-                <h5 class="text-center">Q {{avaliable}}</h5>
+                <h5 class="text-center">Q {{ this.salary - this.totalNormal - this.totalFixed }}</h5>
             </div>
 
             <div class="col-4 col-sm-4 col-md-4 col-lg-4">
@@ -103,7 +103,7 @@
             </div>
         </div>
 
-        <div *ngIf="!loading && elements.length > 0" class="container rounded bg-white mt-2">
+        <div *ngIf="!loading && elements.length > 0 || !loading && itemsfixeds.length > 0" class="container rounded bg-white mt-2">
             <div class="text-center p-1 border-bottom border-dark">
                 <h4>RECENT EXPENSES</h4>
             </div>
@@ -113,7 +113,7 @@
                     <!-- Fixed Items -->
                     <li *ngFor="let fixed of itemsfixeds;" class="list-group-item">
                         <div class="form-row text-center">
-                            <div class="col-9 col-md-7 col-lg-7 text-left text-capitalize">
+                            <div class="col-7 col-md-7 col-lg-7 text-left text-capitalize">
                                 {{ fixed.name }}
                             </div>
                             <div class="col-3 col-md-3 col-lg-3 fw-bold">
@@ -156,7 +156,7 @@
         </div>
 
         <!-- No Items -->
-        <div *ngIf="!loading && elements.length === 0" class="alert alert-warning text-center mt-3" role="alert">
+        <div *ngIf="!loading && elements.length === 0 && itemsfixeds.length === 0" class="alert alert-warning text-center mt-3" role="alert">
             <h4 class="alert-heading">You dont have items</h4>
             <i class="fa fa-exclamation fa-2x"></i>
             <p class="mb-0">

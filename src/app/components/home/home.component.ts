@@ -27,33 +27,38 @@ export class HomeComponent implements OnInit {
   faTrash = faTrash;
   faSpinner = faSpinner;
 
+  // Auth & info
   public loading: boolean = false;
   public user;
   public salary: number = 0;
-  public avaliable: number;
+  public userID: string;
+  public itemID;
+
   public item: ItemModel2 = {
     id: "0",
     name: '',
     cost: 0,
     date: new Date()
   };
-  public items: number;
-  public userID: string;
-  public itemID;
-  public itemsfixeds: ItemModel2[] = [];
-  public normal;
-  public fixed;
 
+  // Total cost
+  public totalFixed = 0;
+  public totalNormal = 0;
+
+  // Length of the arrays
+  public normal: number = 0;
+  public fixed: number = 0;
+
+  // Arrays for items
   public elements: ItemModel2[] = [];
+  public itemsfixeds: ItemModel2[] = [];
 
   constructor(private afAuthSvc: AuthService, private router: Router, private itemSvc: ItemService) {
-
     this.afAuthSvc.afAuth.authState.subscribe(user => {
       if (user) this.userID = user.uid
     });
 
     this.salary = parseInt(localStorage.getItem("salary"));
-    this.items = 0;
   }
 
   async ngOnInit() {
@@ -69,6 +74,7 @@ export class HomeComponent implements OnInit {
     this.router.navigate(["/"]);
   }
 
+  // Normal Items
   addExpense(form) {
     if (form.invalid) {
       Swal.fire({
@@ -81,7 +87,6 @@ export class HomeComponent implements OnInit {
 
     if (this.item.cost <= this.salary) {
       this.itemSvc.addItem(this.item).subscribe(res => {
-        //console.log(res);
         this.getUserItems();
       })
       Swal.fire({
@@ -115,6 +120,7 @@ export class HomeComponent implements OnInit {
       showConfirmButton: true,
     }).then(res => {
 
+      // SweetAlert lleva una promesa
       if (res.value) {
         this.elements.splice(i, 1);
         this.itemSvc.deleteItem(this.userID, id).subscribe(res => {
@@ -124,26 +130,38 @@ export class HomeComponent implements OnInit {
     })
   };
 
+  // Normal Item
   getUserItems() {
     this.itemSvc.getItem(this.userID).subscribe(res => {
 
       let normal = 0;
       this.elements = res;
+      console.log(this.elements.length);
+
       this.elements.forEach((item) => {
 
         normal += item.cost;
       });
 
-      this.avaliable = this.salary - normal;
+      this.totalNormal = normal;
       this.normal = this.elements.length;
-      this.loading = false;
+      this.loading = false;;
     });
   };
 
-  // Item Fixed
+  // Fixed Item
   getItemsFixed() {
     this.itemSvc.getFixedItems(this.userID).subscribe(res => {
+
+      let fixed = 0;
       this.itemsfixeds = res;
+
+      this.itemsfixeds.forEach(item => {
+        fixed += item.cost;
+      })
+
+      this.totalFixed = fixed;
+      this.fixed = this.itemsfixeds.length;
     });
   }
 }

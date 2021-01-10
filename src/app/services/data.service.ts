@@ -5,7 +5,10 @@ import { Injectable } from '@angular/core';
 })
 export class DataService {
 
+  public salary;
+
   constructor() { 
+    this.salary = 0;
   }
 
   setUserData(form, user, date, salary) {

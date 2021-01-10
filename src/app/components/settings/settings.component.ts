@@ -155,6 +155,15 @@ export class SettingsComponent implements OnInit {
     }).then(res => {
 
       if (res.value) {
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Your item was deleted',
+          timer: 1500,
+          showConfirmButton: false
+        });
+
         this.items.splice(i, 1);
         this.itemSvc.deleteItemFixed(this.userID, id).subscribe(res => {
           this.getItems();

@@ -54,6 +54,8 @@ export class HomeComponent implements OnInit {
   public itemsfixeds: ItemModel2[] = [];
 
   constructor(private afAuthSvc: AuthService, private router: Router, private itemSvc: ItemService) {
+    this.salary = 0;
+
     this.afAuthSvc.afAuth.authState.subscribe(user => {
       if (user) this.userID = user.uid
     });
@@ -90,7 +92,6 @@ export class HomeComponent implements OnInit {
         this.getUserItems();
       })
       Swal.fire({
-        position: 'top',
         icon: 'success',
         title: 'Success',
         text: 'Your item was saved.',
@@ -122,6 +123,14 @@ export class HomeComponent implements OnInit {
 
       // SweetAlert lleva una promesa
       if (res.value) {
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Your item was deleted',
+          showConfirmButton: false,
+          timer: 1500
+        });
         this.elements.splice(i, 1);
         this.itemSvc.deleteItem(this.userID, id).subscribe(res => {
           this.getUserItems();

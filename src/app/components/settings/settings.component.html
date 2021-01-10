@@ -47,8 +47,10 @@
                             </div>
                             <input value="{{d}}" autocomplete="off" type="number" class="form-control"
                                 formControlName="date"
+                                onkeyup="if( this.value > 31 ){ this.value ='31'; }else if( this.value < 0){ this.value = '0';}"
                                 onkeypress="if(this.value.length == 2) return false; return event.charCode >= 48"
-                                min="1" [ngClass]="{'is-invalid':form.get('date').touched && form.get('date').invalid}">
+                                min="1" max="31"
+                                [ngClass]="{'is-invalid':form.get('date').touched && form.get('date').invalid}">
                             <div class="invalid-feedback">
                                 Date is required!
                             </div>

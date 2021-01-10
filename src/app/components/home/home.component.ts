@@ -136,7 +136,6 @@ export class HomeComponent implements OnInit {
 
       let normal = 0;
       this.elements = res;
-      console.log(this.elements.length);
 
       this.elements.forEach((item) => {
 

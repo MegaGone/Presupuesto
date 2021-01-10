@@ -18,7 +18,7 @@ export class SettingsComponent implements OnInit {
 
   form = new FormGroup({
     salary: new FormControl('', Validators.required),
-    date: new FormControl('', Validators.required),
+    date: new FormControl('', [Validators.required, Validators.min(1), Validators.max(31)]),
   });
 
   fixed = new FormGroup({

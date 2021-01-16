@@ -107,25 +107,34 @@ export class SettingsComponent implements OnInit {
       return;
     }
 
-    if (this.item.cost <= salario) {
+    if (this.item.cost >= 1) {
 
-      this.itemSvc.addItemFixed(this.item).subscribe(res => {
-        this.getItems();
-      })
+      if (this.item.cost <= salario) {
+        this.itemSvc.addItemFixed(this.item).subscribe(res => {
+          this.getItems();
+        })
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Your item was saved.',
+          showConfirmButton: false,
+          timer: 1500
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Invalid item, try again please.',
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
 
-      Swal.fire({
-        icon: 'success',
-        title: 'Success',
-        text: 'Your item was saved.',
-        showConfirmButton: false,
-        timer: 1500
-      });
-
-    } else {
+    }else{
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'Invalid item, try again please.',
+        text: 'Invalid item, try to enter a number greater than 0.',
         showConfirmButton: false,
         timer: 1500
       });
@@ -175,7 +184,6 @@ export class SettingsComponent implements OnInit {
 
   getItems() {
     this.itemSvc.getFixedItems(this.userID).subscribe(res => {
-      //console.log(res);
       this.items = res;
       this.loading = false
     })

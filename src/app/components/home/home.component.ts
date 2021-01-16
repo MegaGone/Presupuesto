@@ -87,27 +87,41 @@ export class HomeComponent implements OnInit {
       return;
     };
 
-    if (this.item.cost <= this.salary) {
-      this.itemSvc.addItem(this.item).subscribe(res => {
-        this.getUserItems();
-      })
-      Swal.fire({
-        icon: 'success',
-        title: 'Success',
-        text: 'Your item was saved.',
-        showConfirmButton: false,
-        timer: 1500
-      });
+    // Nueva validacion
+    if (this.item.cost >= 1) {
+      if (this.item.cost <= this.salary) {
+        this.itemSvc.addItem(this.item).subscribe(res => {
+          this.getUserItems();
+        })
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Your item was saved.',
+          showConfirmButton: false,
+          timer: 1500
+        });
 
-    } else {
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Invalid item, try again please.',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      };
+
+      // Greater than 0
+    }else{
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'Invalid item, try again please.',
+        text: 'Invalid item, try to enter a number greater than 0.',
         showConfirmButton: false,
         timer: 1500
-      })
-    };
+      });
+    }
+
 
     form.reset();
   }

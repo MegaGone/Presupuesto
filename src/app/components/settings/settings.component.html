@@ -28,7 +28,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text rounded">Salary</span>
                             </div>
-                            <input value="{{s}}" autocomplete="off" type="number"
+                            <input [(ngModel)]="data2.salary" autocomplete="off" type="number"
                                 onkeypress="return event.charCode >= 48" min="1" class="form-control"
                                 formControlName="salary"
                                 [ngClass]="{'is-invalid':form.get('salary').touched && form.get('salary').invalid}">
@@ -45,7 +45,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text rounded">Cutoff Date</span>
                             </div>
-                            <input value="{{d}}" autocomplete="off" type="number" class="form-control"
+                            <input [(ngModel)]="data2.cutOffDate" autocomplete="off" type="number" class="form-control"
                                 formControlName="date"
                                 onkeyup="if( this.value > 31 ){ this.value ='31'; }else if( this.value < 0){ this.value = '0';}"
                                 onkeypress="if(this.value.length == 2) return false; return event.charCode >= 48"

@@ -7,6 +7,7 @@ import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { ItemService } from 'src/app/services/item.service';
 import { ItemModel2 } from 'src/app/models/item.model';
+import { userDataModel } from 'src/app/models/data.model';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -14,7 +15,6 @@ import { ItemModel2 } from 'src/app/models/item.model';
   providers: [AuthService, DataService]
 })
 export class SettingsComponent implements OnInit {
-
 
   form = new FormGroup({
     salary: new FormControl('', Validators.required),
@@ -36,6 +36,13 @@ export class SettingsComponent implements OnInit {
     date: new Date()
   };
 
+  // New
+  public data2: userDataModel = {
+    salary: null,
+    cutOffDate: null
+  };
+
+
   public user;
   public data: {} = {};
   public userDate;
@@ -50,7 +57,10 @@ export class SettingsComponent implements OnInit {
   public loading: boolean = false;
 
   constructor(
-    private afAuthSvc: AuthService, public router: Router, private dataService: DataService, private itemSvc: ItemService) {
+    private afAuthSvc: AuthService,
+    public router: Router,
+    private dataService: DataService,
+    private itemSvc: ItemService,) {
 
     this.afAuthSvc.afAuth.authState.subscribe(user => {
       this.userID = user.uid;
@@ -60,7 +70,7 @@ export class SettingsComponent implements OnInit {
   async ngOnInit() {
     this.loading = true;
     this.user = await this.afAuthSvc.getCurrentUser();
-    this.getUserData();
+    //this.getUserData();
     this.getItems();
   }
 
@@ -82,18 +92,21 @@ export class SettingsComponent implements OnInit {
       return;
     }
 
-    this.dataService.setUserData(form, this.userData, this.date, this.salary)
-    Swal.fire({
-      icon: 'success',
-      title: 'Update',
-      text: 'Your changes was update :)',
-      timer: 2000,
-      showConfirmButton: false
-    });
+    if (this.userID) {
+      this.dataService.uptadeData(this.userID, this.data2).subscribe(res => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Update',
+          text: 'Your changes was update :)',
+          timer: 2000,
+          showConfirmButton: false
+        });
+      })
+    }
+    
   }
 
   addExpense(form) {
-
     let salario = parseInt(localStorage.getItem("salary"));
 
     if (form.invalid) {
@@ -104,6 +117,7 @@ export class SettingsComponent implements OnInit {
         showConfirmButton: false,
         timer: 1500
       })
+      form.reset();
       return;
     }
 
@@ -130,7 +144,7 @@ export class SettingsComponent implements OnInit {
         });
       }
 
-    }else{
+    } else {
       Swal.fire({
         icon: 'error',
         title: 'Error',
@@ -143,6 +157,7 @@ export class SettingsComponent implements OnInit {
     form.reset();
   }
 
+  /*
   getUserData() {
     const data = this.dataService.getUserData()
     this.form.setValue({
@@ -152,6 +167,7 @@ export class SettingsComponent implements OnInit {
     this.s = data.salary;
     this.d = data.date;
   }
+  */
 
   deleteItem(id: string, i: number) {
 

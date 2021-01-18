@@ -33,6 +33,7 @@ export class HomeComponent implements OnInit {
   public salary: number = 0;
   public userID: string;
   public itemID;
+  public nameItemValue: string = '';
 
   public item: ItemModel2 = {
     id: "0",
@@ -78,6 +79,7 @@ export class HomeComponent implements OnInit {
 
   // Normal Items
   addExpense(form) {
+
     if (form.invalid) {
       Swal.fire({
         icon: 'error',

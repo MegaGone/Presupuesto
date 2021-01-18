@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { userDataModel } from '../models/data.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -6,8 +9,10 @@ import { Injectable } from '@angular/core';
 export class DataService {
 
   public salary;
+  private url = 'https://yourbudgeteasy-default-rtdb.firebaseio.com';
+  public userDataModel: userDataModel;
 
-  constructor() { 
+  constructor( private http: HttpClient ) { 
     this.salary = 0;
   }
 
@@ -29,5 +34,14 @@ export class DataService {
     }
 
     return response;
+  }
+
+
+  createUserData(userID: string | number, data: userDataModel){
+    return this.http.post(`${this.url}/userdata/${ userID }.json`, data);
+  }
+
+  uptadeData(userID: string | number, data: userDataModel){
+    return this.http.put(`${this.url}/userdata/${ userID }.json`, data);
   }
 }

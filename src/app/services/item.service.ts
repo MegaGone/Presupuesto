@@ -19,24 +19,24 @@ export class ItemService {
         })
 
         //this.getAllData();
-        
+
     }
 
     // Fixed Items
-    addItemFixed(item: ItemModel2){
+    addItemFixed(item: ItemModel2) {
         return this.http.post(`${this.url}/fixed/${this.userID}.json`, item);
     }
 
-    getFixedItems(id: string){
-        return this.http.get(`${this.url}/fixed/${ id }.json`)
+    getFixedItems(id: string) {
+        return this.http.get(`${this.url}/fixed/${id}.json`)
             .pipe(
-                map( this.mapItems),
+                map(this.mapItems),
                 delay(100)
             );
     }
 
-    deleteItemFixed(id: string, itemId: string){
-        return this.http.delete(`${this.url}/fixed/${ id }/${ itemId }.json`);
+    deleteItemFixed(id: string, itemId: string) {
+        return this.http.delete(`${this.url}/fixed/${id}/${itemId}.json`);
     }
 
     // Normal items
@@ -48,44 +48,43 @@ export class ItemService {
         return this.afDb.list<ItemModel2[]>(`items`).valueChanges().subscribe((res) => console.log(res));
     }
 
-    getItem(id: string){
+    getItem(id: string) {
         //console.log(`${this.url}/items/${ id }`);
-        
-        return this.http.get(`${this.url}/items/${ id }.json`)
-            .pipe( 
-                map( this.mapItems ),
+
+        return this.http.get(`${this.url}/items/${id}.json`)
+            .pipe(
+                map(this.mapItems),
                 delay(100)
             );
     }
 
 
-    deleteItem(id: string,Itemid: string){
-       // console.log('delete',Itemid); 
+    deleteItem(id: string, Itemid: string) {
+        // console.log('delete',Itemid); 
         // elimiar desde firebase basado en el id
-        
-        return this.http.delete(`${ this.url }/items/${ id }/${ Itemid }.json`);
+
+        return this.http.delete(`${this.url}/items/${id}/${Itemid}.json`);
     }
 
     // Convertir a un objeto la informacion
-    private mapItems( itemsObj: object ){
+    private mapItems(itemsObj: object) {
         //console.log("raw data", itemsObj);
         // transformar item dl backend al frontend
         const items: ItemModel2[] = [];
 
-        if( itemsObj === null ) { return items; }
+        if (itemsObj === null) { return items; }
 
         Object.keys(itemsObj).forEach(key => {
-           
-            items.push( {
+
+            items.push({
                 id: key,
                 name: itemsObj[key].name,
-                cost:itemsObj[key].cost,
+                cost: itemsObj[key].cost,
                 date: itemsObj[key].date,
             });
         });
         //console.log('data transformed', items);
-        
+
         return items;
     }
-
 }

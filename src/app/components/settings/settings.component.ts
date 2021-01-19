@@ -42,7 +42,7 @@ export class SettingsComponent implements OnInit {
     cutOffDate: null
   };
 
-
+  public alldata: any;
   public user;
   public data: {} = {};
   public userDate;
@@ -71,6 +71,7 @@ export class SettingsComponent implements OnInit {
     this.loading = true;
     this.user = await this.afAuthSvc.getCurrentUser();
     //this.getUserData();
+    this.getData();
     this.getItems();
   }
 
@@ -97,13 +98,13 @@ export class SettingsComponent implements OnInit {
         Swal.fire({
           icon: 'success',
           title: 'Update',
-          text: 'Your changes was update :)',
+          text: 'Your configuration was update :)',
           timer: 2000,
           showConfirmButton: false
         });
-      })
+      });
+
     }
-    
   }
 
   addExpense(form) {
@@ -203,5 +204,33 @@ export class SettingsComponent implements OnInit {
       this.items = res;
       this.loading = false
     })
+  };
+
+  getData() {
+    this.dataService.getData(this.userID).subscribe(res => {
+      this.alldata = res;
+      this.form.setValue({
+        salary: this.alldata.salary,
+        date: this.alldata.cutOffDate
+      });
+      this.s = this.alldata.salary;
+      this.d = this.alldata.cutOffDate
+
+      console.log("salary => ", this.s);
+      console.log("date => ", this.d);
+    });
   }
+
+
+  /*
+getUserData() {
+  const data = this.dataService.getUserData()
+  this.form.setValue({
+    salary: data.salary,
+    date: data.date
+  })
+  this.s = data.salary;
+  this.d = data.date;
+}
+*/
 }

@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class DataService {
-  
+
   private url = 'https://yourbudgeteasy-default-rtdb.firebaseio.com';
   public userDataModel: userDataModel;
 
@@ -19,7 +19,11 @@ export class DataService {
     return this.http.put(`${this.url}/userdata/${userID}.json`, data);
   }
 
-  getData(user: string){
+  getData(user: string) {
     return this.http.get(`${this.url}/userdata/${user}.json`);
+  }
+
+  getSalary(user: string){
+    return this.http.get(`${this.url}/userdata/${user}/salary.json`);
   }
 }

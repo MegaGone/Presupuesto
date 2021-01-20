@@ -80,7 +80,7 @@
                     <fa-icon [icon]="faHandHoldingUsd" class="text-right icon"></fa-icon>
                     <span class="sub"> AVAILABLE</span>
                 </p>
-                <h5 class="text-center">Q {{ this.salary - this.totalNormal - this.totalFixed | number}}</h5>
+                <h5 class="text-center">Q {{ data - this.totalNormal - this.totalFixed | number}}</h5>
             </div>
 
             <div class="col-4 col-sm-4 col-md-4 col-lg-4">
@@ -88,7 +88,7 @@
                     <fa-icon [icon]="faBookMark" class="text-right icon"></fa-icon>
                     <span class="sub"> TOTAL BUDGET</span>
                 </p>
-                <h5 class="text-center">Q {{salary | number}}</h5>
+                <h5 class="text-center">Q {{ data | number}}</h5>
             </div>
         </div>
 

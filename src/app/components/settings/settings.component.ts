@@ -38,21 +38,18 @@ export class SettingsComponent implements OnInit {
 
   // New
   public data2: userDataModel = {
-    salary: null,
-    cutOffDate: null
+    salary: 0,
+    cutOffDate: 0
   };
 
+  // User info & auth
   public alldata: any;
   public user;
-  public data: {} = {};
-  public userDate;
-  public userData;
-  public userSalary: number;
-  public date: any;
-  public salary: any;
   public s: any;
   public d: any;
   public userID;
+
+  //UI
   public items: ItemModel2[] = [];
   public loading: boolean = false;
 
@@ -70,7 +67,6 @@ export class SettingsComponent implements OnInit {
   async ngOnInit() {
     this.loading = true;
     this.user = await this.afAuthSvc.getCurrentUser();
-    //this.getUserData();
     this.getData();
     this.getItems();
   }
@@ -158,18 +154,6 @@ export class SettingsComponent implements OnInit {
     form.reset();
   }
 
-  /*
-  getUserData() {
-    const data = this.dataService.getUserData()
-    this.form.setValue({
-      salary: data.salary,
-      date: data.date
-    })
-    this.s = data.salary;
-    this.d = data.date;
-  }
-  */
-
   deleteItem(id: string, i: number) {
 
     Swal.fire({
@@ -215,22 +199,6 @@ export class SettingsComponent implements OnInit {
       });
       this.s = this.alldata.salary;
       this.d = this.alldata.cutOffDate
-
-      console.log("salary => ", this.s);
-      console.log("date => ", this.d);
     });
   }
-
-
-  /*
-getUserData() {
-  const data = this.dataService.getUserData()
-  this.form.setValue({
-    salary: data.salary,
-    date: data.date
-  })
-  this.s = data.salary;
-  this.d = data.date;
-}
-*/
 }

@@ -6,6 +6,7 @@ import { faUserCog, faBookmark, faHandHoldingUsd, faEdit, faTrash, faSpinner, fa
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ItemModel2 } from '../../models/item.model';
 import Swal from 'sweetalert2';
+import { DataService } from 'src/app/services/data.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -30,15 +31,15 @@ export class HomeComponent implements OnInit {
   // Auth & info
   public loading: boolean = false;
   public user;
-  public salary: number = 0;
   public userID: string;
   public itemID;
   public nameItemValue: string = '';
+  public data: any = 0;
 
   public item: ItemModel2 = {
     id: "0",
     name: '',
-    cost: 0,
+    cost: null,  //changes
     date: new Date()
   };
 
@@ -54,22 +55,28 @@ export class HomeComponent implements OnInit {
   public elements: ItemModel2[] = [];
   public itemsfixeds: ItemModel2[] = [];
 
-  constructor(private afAuthSvc: AuthService, private router: Router, private itemSvc: ItemService) {
-    this.salary = 0;
+  constructor(private afAuthSvc: AuthService, private router: Router, private itemSvc: ItemService, private dataSvc: DataService) {
 
     this.afAuthSvc.afAuth.authState.subscribe(user => {
       if (user) this.userID = user.uid
     });
-
-    this.salary = parseInt(localStorage.getItem("salary"));
   }
 
   async ngOnInit() {
     this.loading = true;
     this.user = await this.afAuthSvc.getCurrentUser();
-    this.salary = parseInt(localStorage.getItem("salary"));
+    this.getUserData();
     this.getUserItems();
     this.getItemsFixed();
+
+  }
+
+
+  getUserData() {
+    this.dataSvc.getSalary(this.userID).subscribe(res => {
+      console.log(res);
+      this.data = res;
+    })
   }
 
   logOut() {
@@ -84,14 +91,14 @@ export class HomeComponent implements OnInit {
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'Error to add your item'
+        text: 'Invalid item, try again please.'
       })
       return;
     };
 
     // Nueva validacion
     if (this.item.cost >= 1) {
-      if (this.item.cost <= this.salary) {
+      if (this.item.cost <= this.data) {
         this.itemSvc.addItem(this.item).subscribe(res => {
           this.getUserItems();
         })
@@ -107,14 +114,14 @@ export class HomeComponent implements OnInit {
         Swal.fire({
           icon: 'error',
           title: 'Error',
-          text: 'Invalid item, try again please.',
+          text: `Your item cant be greather than ${this.data}`,
           showConfirmButton: false,
           timer: 1500
         })
       };
 
       // Greater than 0
-    }else{
+    } else {
       Swal.fire({
         icon: 'error',
         title: 'Error',
@@ -123,8 +130,6 @@ export class HomeComponent implements OnInit {
         timer: 1500
       });
     }
-
-
     form.reset();
   }
 
@@ -157,6 +162,7 @@ export class HomeComponent implements OnInit {
 
   // Normal Item
   getUserItems() {
+
     this.itemSvc.getItem(this.userID).subscribe(res => {
 
       let normal = 0;
@@ -187,5 +193,5 @@ export class HomeComponent implements OnInit {
       this.totalFixed = fixed;
       this.fixed = this.itemsfixeds.length;
     });
-  }
+  };
 }

@@ -73,10 +73,7 @@ export class HomeComponent implements OnInit {
 
 
   getUserData() {
-    this.dataSvc.getSalary(this.userID).subscribe(res => {
-      console.log(res);
-      this.data = res;
-    })
+    this.dataSvc.getSalary(this.userID).subscribe(res => this.data = res)
   }
 
   logOut() {

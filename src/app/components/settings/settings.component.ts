@@ -32,7 +32,7 @@ export class SettingsComponent implements OnInit {
   public item: ItemModel2 = {
     id: '0',
     name: '',
-    cost: 0,
+    cost: null,
     date: new Date()
   };
 
@@ -48,6 +48,7 @@ export class SettingsComponent implements OnInit {
   public s: any;
   public d: any;
   public userID;
+  public salary: any;
 
   //UI
   public items: ItemModel2[] = [];
@@ -69,11 +70,16 @@ export class SettingsComponent implements OnInit {
     this.user = await this.afAuthSvc.getCurrentUser();
     this.getData();
     this.getItems();
+    this.getSalary();
   }
 
   logOut() {
     this.afAuthSvc.logOut();
     this.router.navigate(["/"]);
+  }
+
+  getSalary(){
+    this.dataService.getSalary(this.userID).subscribe(res => this.salary = res);
   }
 
 
@@ -104,8 +110,6 @@ export class SettingsComponent implements OnInit {
   }
 
   addExpense(form) {
-    let salario = parseInt(localStorage.getItem("salary"));
-
     if (form.invalid) {
       Swal.fire({
         icon: 'error',
@@ -119,8 +123,9 @@ export class SettingsComponent implements OnInit {
     }
 
     if (this.item.cost >= 1) {
-
-      if (this.item.cost <= salario) {
+      console.log(this.salary);
+      
+      if (this.item.cost <= this.salary) {
         this.itemSvc.addItemFixed(this.item).subscribe(res => {
           this.getItems();
         })

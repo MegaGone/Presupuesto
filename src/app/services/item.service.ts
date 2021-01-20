@@ -49,8 +49,6 @@ export class ItemService {
     }
 
     getItem(id: string) {
-        //console.log(`${this.url}/items/${ id }`);
-
         return this.http.get(`${this.url}/items/${id}.json`)
             .pipe(
                 map(this.mapItems),
@@ -60,16 +58,13 @@ export class ItemService {
 
 
     deleteItem(id: string, Itemid: string) {
-        // console.log('delete',Itemid); 
         // elimiar desde firebase basado en el id
-
         return this.http.delete(`${this.url}/items/${id}/${Itemid}.json`);
     }
 
     // Convertir a un objeto la informacion
     private mapItems(itemsObj: object) {
-        //console.log("raw data", itemsObj);
-        // transformar item dl backend al frontend
+        // transformar item de firebase al frontend
         const items: ItemModel2[] = [];
 
         if (itemsObj === null) { return items; }

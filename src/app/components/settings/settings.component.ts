@@ -105,7 +105,6 @@ export class SettingsComponent implements OnInit {
           showConfirmButton: false
         });
       });
-
     }
   }
 
@@ -123,7 +122,6 @@ export class SettingsComponent implements OnInit {
     }
 
     if (this.item.cost >= 1) {
-      console.log(this.salary);
       
       if (this.item.cost <= this.salary) {
         this.itemSvc.addItemFixed(this.item).subscribe(res => {
@@ -140,7 +138,7 @@ export class SettingsComponent implements OnInit {
         Swal.fire({
           icon: 'error',
           title: 'Error',
-          text: 'Invalid item, try again please.',
+          text: `Your item cant be greather than Q ${this.salary}`,
           showConfirmButton: false,
           timer: 1500
         });

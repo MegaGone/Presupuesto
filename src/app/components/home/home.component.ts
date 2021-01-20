@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
   public item: ItemModel2 = {
     id: "0",
     name: '',
-    cost: null,  //changes
+    cost: null,  
     date: new Date()
   };
 
@@ -111,7 +111,7 @@ export class HomeComponent implements OnInit {
         Swal.fire({
           icon: 'error',
           title: 'Error',
-          text: `Your item cant be greather than ${this.data}`,
+          text: `Your item cant be greather than Q ${this.data}`,
           showConfirmButton: false,
           timer: 1500
         })
@@ -161,12 +161,10 @@ export class HomeComponent implements OnInit {
   getUserItems() {
 
     this.itemSvc.getItem(this.userID).subscribe(res => {
-
       let normal = 0;
       this.elements = res;
 
       this.elements.forEach((item) => {
-
         normal += item.cost;
       });
 

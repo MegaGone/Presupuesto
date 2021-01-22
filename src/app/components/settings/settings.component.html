@@ -26,7 +26,9 @@
                     <div class="col-lg-12">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text rounded">Salary</span>
+                                <span class="input-group-text rounded">
+                                    <fa-icon [icon]="faDollarSign"></fa-icon>Salary
+                                </span>
                             </div>
                             <input [(ngModel)]="data2.salary" autocomplete="off" type="number"
                                 onkeypress="return event.charCode >= 48" min="1" class="form-control"
@@ -43,7 +45,9 @@
                     <div class="col-lg-12">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text rounded">Cutoff Date</span>
+                                <span class="input-group-text rounded">
+                                  <fa-icon [icon]="faCreditCard"></fa-icon>Cutoff Date
+                                </span>
                             </div>
                             <input [(ngModel)]="data2.cutOffDate" autocomplete="off" type="number" class="form-control"
                                 formControlName="date"
@@ -57,14 +61,16 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-dark btn-block">Save</button>
+                <button class="btn btn-dark btn-block">
+                    <fa-icon [icon]="faSave"></fa-icon> Save
+                </button>
             </form>
         </div>
 
         <!-- Modal -->
-        <button type="button" class="btn btn-primary btn-block mt-2" data-bs-toggle="modal"
+        <button (click)="resetForm()" type="button" class="btn btn-primary btn-block mt-2" data-bs-toggle="modal"
             data-bs-target="#exampleModal">
-            + Add Expense
+            <fa-icon [icon]="faPlus">Add Expense</fa-icon> Add Expense
         </button>
 
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

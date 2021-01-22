@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { ItemService } from '../../services/item.service';
 import { Router } from '@angular/router';
-import { faUserCog, faBookmark, faHandHoldingUsd, faEdit, faTrash, faSpinner, faTintSlash } from '@fortawesome/free-solid-svg-icons';
+import { faUserCog, faBookmark, faHandHoldingUsd, faEdit, faTrash, faSpinner, faThumbtack, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ItemModel2 } from '../../models/item.model';
 import Swal from 'sweetalert2';
 import { DataService } from 'src/app/services/data.service';
+import { formatCurrency } from '@angular/common';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -21,12 +22,15 @@ export class HomeComponent implements OnInit {
     cost: new FormControl('', Validators.required)
   })
 
+  // Icons
   faUserCog = faUserCog;
   faBookMark = faBookmark;
   faHandHoldingUsd = faHandHoldingUsd;
   faEdit = faEdit;
   faTrash = faTrash;
   faSpinner = faSpinner;
+  faThumbtack = faThumbtack;
+  faPlus = faPlus;
 
   // Auth & info
   public loading: boolean = false;
@@ -68,7 +72,6 @@ export class HomeComponent implements OnInit {
     this.getUserData();
     this.getUserItems();
     this.getItemsFixed();
-
   }
 
 
@@ -189,4 +192,8 @@ export class HomeComponent implements OnInit {
       this.fixed = this.itemsfixeds.length;
     });
   };
+
+  reset(){
+    this.add.reset();
+  }
 }

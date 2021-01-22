@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { DataService } from '../../services/data.service';
 import { Router } from '@angular/router';
-import { faArrowLeft, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faTrash, faPlus, faSave, faDollarSign, faCreditCard} from '@fortawesome/free-solid-svg-icons';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { ItemService } from 'src/app/services/item.service';
@@ -26,8 +26,13 @@ export class SettingsComponent implements OnInit {
     cost: new FormControl('', Validators.required)
   })
 
+  // Icons
   faArrowLeft = faArrowLeft;
   faTrash = faTrash;
+  faPlus = faPlus;
+  faSave = faSave;
+  faDollarSign = faDollarSign;
+  faCreditCard = faCreditCard;
 
   public item: ItemModel2 = {
     id: '0',
@@ -203,5 +208,10 @@ export class SettingsComponent implements OnInit {
       this.s = this.alldata.salary;
       this.d = this.alldata.cutOffDate
     });
+  };
+
+  //Resetform
+  resetForm(){
+    this.fixed.reset();
   }
 }

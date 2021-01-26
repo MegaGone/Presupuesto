@@ -46,7 +46,7 @@
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text rounded">
-                                  <fa-icon [icon]="faCreditCard"></fa-icon>Cutoff Date
+                                    <fa-icon [icon]="faCreditCard"></fa-icon>Cutoff Date
                                 </span>
                             </div>
                             <input [(ngModel)]="data2.cutOffDate" autocomplete="off" type="number" class="form-control"
@@ -134,7 +134,8 @@
                                 Q {{ item.cost | number}}
                             </div>
                             <div class="col-2 col-md-2 col-lg-2 text-right">
-                                <button data-id="{{ item.id }}" class="btn btn-danger" (click)="deleteItem(item.id, i)">
+                                <button data-id="{{ item.id }}" class="btn btn-danger" (click)="deleteItem(item.id, i)"
+                                    data-bs-toggle="tooltip" data-bs-placement="right" title="Delete this fixed expense">
                                     <fa-icon [icon]="faTrash"></fa-icon>
                                 </button>
                             </div>
@@ -165,6 +166,8 @@
         </div>
 
 
-        <button class="btn btn-block btn-danger mt-3" (click)="logOut()">LogOut</button>
+        <button class="btn btn-block btn-danger mt-3" (click)="logOut()">
+            <fa-icon [icon]="faSignOutAlt"></fa-icon> LogOut
+        </button>
     </div>
 </div>

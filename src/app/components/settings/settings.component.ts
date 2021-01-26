@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { DataService } from '../../services/data.service';
 import { Router } from '@angular/router';
-import { faArrowLeft, faTrash, faPlus, faSave, faDollarSign, faCreditCard} from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faTrash, faPlus, faSave, faDollarSign, faCreditCard, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { ItemService } from 'src/app/services/item.service';
 import { ItemModel2 } from 'src/app/models/item.model';
 import { userDataModel } from 'src/app/models/data.model';
+import { AngularFireAuth } from '@angular/fire/auth';
+
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -33,6 +35,7 @@ export class SettingsComponent implements OnInit {
   faSave = faSave;
   faDollarSign = faDollarSign;
   faCreditCard = faCreditCard;
+  faSignOutAlt = faSignOutAlt;
 
   public item: ItemModel2 = {
     id: '0',
@@ -55,7 +58,7 @@ export class SettingsComponent implements OnInit {
   public userID;
   public salary: any;
 
-  //UI
+  // Show UI
   public items: ItemModel2[] = [];
   public loading: boolean = false;
 
@@ -63,31 +66,40 @@ export class SettingsComponent implements OnInit {
     private afAuthSvc: AuthService,
     public router: Router,
     private dataService: DataService,
-    private itemSvc: ItemService,) {
+    private itemSvc: ItemService,
+    public fireAuth: AngularFireAuth) {
 
+      /*
     this.afAuthSvc.afAuth.authState.subscribe(user => {
       this.userID = user.uid;
-    })
+    })*/
   }
 
   async ngOnInit() {
+
+    // new userID
+    this.userID = (await this.fireAuth.currentUser).uid;
+
     this.loading = true;
     this.user = await this.afAuthSvc.getCurrentUser();
     this.getData();
     this.getItems();
     this.getSalary();
   }
-
+  
+  //Logout
   logOut() {
-    this.afAuthSvc.logOut();
     this.router.navigate(["/"]);
+    this.afAuthSvc.logOut();
   }
 
-  getSalary(){
+  // Get salaty
+  getSalary() {
     this.dataService.getSalary(this.userID).subscribe(res => this.salary = res);
   }
 
 
+  // Update userdata
   saveChanges(form: NgForm) {
     if (form.invalid) {
       Swal.fire({
@@ -113,6 +125,8 @@ export class SettingsComponent implements OnInit {
     }
   }
 
+  // Add
+
   addExpense(form) {
     if (form.invalid) {
       Swal.fire({
@@ -127,7 +141,7 @@ export class SettingsComponent implements OnInit {
     }
 
     if (this.item.cost >= 1) {
-      
+
       if (this.item.cost <= this.salary) {
         this.itemSvc.addItemFixed(this.item).subscribe(res => {
           this.getItems();
@@ -162,6 +176,7 @@ export class SettingsComponent implements OnInit {
     form.reset();
   }
 
+  // Delete
   deleteItem(id: string, i: number) {
 
     Swal.fire({
@@ -191,6 +206,7 @@ export class SettingsComponent implements OnInit {
     })
   }
 
+  // Get fixed items
   getItems() {
     this.itemSvc.getFixedItems(this.userID).subscribe(res => {
       this.items = res;
@@ -198,6 +214,7 @@ export class SettingsComponent implements OnInit {
     })
   };
 
+  // Get userdata
   getData() {
     this.dataService.getData(this.userID).subscribe(res => {
       this.alldata = res;
@@ -211,7 +228,7 @@ export class SettingsComponent implements OnInit {
   };
 
   //Resetform
-  resetForm(){
+  resetForm() {
     this.fixed.reset();
   }
 }

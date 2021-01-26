@@ -11,7 +11,7 @@ export class AuthService {
 
   public userData: Observable<firebase.User>
 
-  constructor(public afAuth: AngularFireAuth, public router: Router) { 
+  constructor(public afAuth: AngularFireAuth, public router: Router) {
     this.userData = afAuth.authState;
   }
 
@@ -20,14 +20,14 @@ export class AuthService {
   async googleLogin() {
     try {
       this.afAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-      .then(() => this.afAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider()));
+        .then(() => this.afAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider()));
       /* this.afAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider()); */
     }
     catch (err) { console.warn(err); }
   }
 
   // LogOut
-  async logOut() {
+  logOut() {
     try {
       this.afAuth.signOut();
     }
